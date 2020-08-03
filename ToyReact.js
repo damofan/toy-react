@@ -45,6 +45,20 @@ export class Component {
   appendChild(vchildren) {
     this.children.push(vchildren)
   }
+  setState(newState) {
+    const merge = (oldState, newState) => {
+      for( let p in newState) {
+        typeof newState[p] === 'object' ? 
+        (
+          (typeof oldState[p] !== 'object' && (oldState[p] = {}))
+          (merge(oldState[p], newState[p]))
+        )
+        :
+        oldState[p] = newState[p]
+      }
+    }
+    merge(this.state || {}, newState)
+  }
 }
 
 export let ToyReact = {
